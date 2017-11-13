@@ -82,22 +82,34 @@ void MainWindow::getData(){
     QByteArray array;
     QStringList list;
     qint64 thetime;
+    QString ipStr;
     qDebug() << "to get data...";
     if(socket->state() == QAbstractSocket::ConnectedState){
         if(socket->isOpen()){
             qDebug() << "reading...";
 
-            socket->write("get 127.0.0.1 5\r\n");
+            //socket->write("get 127.0.0.1 5\r\n");
 
-            //DEU ERRO
-            //acho que esse 5 seria o valor aleatório do servidor, ALTERAR
-            //socket->write("get " + ui->lineEditIP->text() + "5" +"\r\n");
+        //VERIFICAR
+
+         //ipStr = "get " + QString::number(ui->lineEditIP->text()) + " 5" + "\r\n";
+            //ipStr = "get " + ui->lineEditIP->text() + " 5\r\n";
+
+            //o argumento dá erro das duas formas, sendo o primeiro o modelo mais adequado
+            //o erro seria no argumento do write
+
+          // socket->write(ipStr);
+
+
+
 
             socket->waitForBytesWritten();
             socket->waitForReadyRead();
             qDebug() << socket->bytesAvailable();
             while(socket->bytesAvailable()){
+                //separa o tempo recebido do servidor do valor dado
                 str = socket->readLine().replace("\n","").replace("\r","");
+
                 list = str.split(" ");
                 if(list.size() == 2){
                     bool ok;
