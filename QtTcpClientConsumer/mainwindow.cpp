@@ -3,7 +3,10 @@
 #include <QDateTime>
 #include <QTextBrowser>
 #include <QString>
+#include <vector>
+#include "plotter.h"
 
+using namespace std;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -83,25 +86,18 @@ void MainWindow::getData(){
     QStringList list;
     qint64 thetime;
     QString ipStr;
+    vector<qint64> tempo;
+    vector<int> valor;
+
     qDebug() << "to get data...";
     if(socket->state() == QAbstractSocket::ConnectedState){
         if(socket->isOpen()){
             qDebug() << "reading...";
 
-            //socket->write("get 127.0.0.1 5\r\n");
-
-        //VERIFICAR
-
-         //ipStr = "get " + QString::number(ui->lineEditIP->text()) + " 5" + "\r\n";
-            //ipStr = "get " + ui->lineEditIP->text() + " 5\r\n";
-
-            //o argumento dá erro das duas formas, sendo o primeiro o modelo mais adequado
-            //o erro seria no argumento do write
-
-          // socket->write(ipStr);
+         ipStr = "get " + ui->lineEditIP->text() + " 5" + "\r\n";
 
 
-
+          socket->write(ipStr.toStdString().c_str());
 
             socket->waitForBytesWritten();
             socket->waitForReadyRead();
@@ -117,6 +113,11 @@ void MainWindow::getData(){
                     thetime = str.toLongLong(&ok);
                     str = list.at(1);
                     qDebug() << thetime << ": " << str;
+
+                    tempo.push_back(thetime);
+                    valor.push_back(str.toInt());
+                if(thetime.size==30)
+                  ui->widget->plotGrafico(tempo,valor);
                 }
             }
         }

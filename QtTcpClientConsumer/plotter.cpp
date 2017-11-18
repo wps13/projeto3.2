@@ -4,6 +4,7 @@
 #include <QPen>
 #include <cmath>
 
+
 using namespace std;
 /**
  * @brief Plotter::Plotter Construtor da Classe
@@ -35,22 +36,7 @@ void Plotter::paintEvent(QPaintEvent *event)
      */
     QPen pen;
 
-    /**
-     * @brief x1 Posição inicial horizontal da reta
-     */
 
-    /**
-     * @brief x2 Posição horizontal final da reta
-     */
-
-    /**
-     * @brief y1 Posição vertical inicial da reta
-     */
-
-    /**
-     * @brief y2 Posição vertical final da reta
-     */
-    int x1,x2,y1,y2;
 
     //define a cor e tipo do preenchimento do fundo da tela
     //brush.setColor(QColor(255,255,100));
@@ -83,20 +69,39 @@ void Plotter::paintEvent(QPaintEvent *event)
     pen.setColor(QColor(255,255,255));
     painter.setPen(pen);
 
-    //ALTERAR AS VARIAVÉIS DE FORMA QUE O GRÁFICO SEJA DO TEMPO X VALOR DO SERVIDOR
-
-    //define as posições iniciais
-    x1=0;
-    y1=height();
-
-    //desenha várias retas na tela de forma a desenhar o gráfico
-    for(int i=1;i<width();i++)
-    {
-        x2=i;
-        y2=0; //valor a ser alterado
-        x1=x2;
-        y1=y2;
-    }
-
 
 }
+
+void Plotter::plotGrafico(vector<qint64> &t, vector<int> &v)
+{
+    int x = t.max_size();
+    int y = v.max_size();
+    vector<long> t1;
+    vector<int> v1;
+
+    for(int i;i<t.size();i++)
+        t1[i]=t[i]/x;
+    for(int j;j<v.size();j++)
+        v1[j]=v[j]/y;
+
+     int x1,x2,y1,y2;
+
+     //ALTERAR AS VARIAVÉIS DE FORMA QUE O GRÁFICO SEJA DO TEMPO X VALOR DO SERVIDOR
+
+     //define as posições iniciais
+     x1=t1[0];
+     y1=v1[0];
+
+     //desenha várias retas na tela de forma a desenhar o gráfico
+     for(int i=1;i<t1.size();i++)
+     {
+         x2=t1[i];
+         y2=v[i]; //valor a ser alterado
+         x1=x2;
+         y1=y2;
+
+           repaint();
+     }
+
+}
+
