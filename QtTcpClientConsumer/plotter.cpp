@@ -74,7 +74,7 @@ void Plotter::paintEvent(QPaintEvent *event)
 
 void Plotter::plotGrafico(vector<qint64> &t, vector<int> &v)
 {
-    int x = t.max_size();
+    double x = t.max_size();
     int y = v.max_size();
     vector<long> t1;
     vector<int> v1;

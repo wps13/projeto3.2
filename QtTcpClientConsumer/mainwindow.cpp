@@ -71,12 +71,32 @@ void MainWindow::start()
 void MainWindow::stop()
 {
     killTimer(timer);
-    timer=0;
     qDebug() << "Timer Killed";
 }
 
 void MainWindow::update()
 {
+    QString strList;
+    QString str;
+
+    if(socket->state() == QAbstractSocket::ConnectedState){
+        if(socket->isOpen()){
+            qDebug() << "Pegando IP";
+            strList = "list\r\n";
+            socket->write(strList.toStdString().c_str());
+
+              socket->waitForBytesWritten();
+              socket->waitForReadyRead();
+              qDebug() << socket->bytesAvailable();
+              while(socket->bytesAvailable()){
+                  //separa o tempo recebido do servidor do valor dado
+                  str = socket->readLine().replace("\n","").replace("\r","");
+                 ui->listWidget->addItem(str);
+              }
+
+
+        }
+    }
 
 }
 
@@ -116,9 +136,10 @@ void MainWindow::getData(){
 
                     tempo.push_back(thetime);
                     valor.push_back(str.toInt());
-                if(thetime.size==30)
-                  ui->widget->plotGrafico(tempo,valor);
+
                 }
+                if(tempo.size()==30)
+                  ui->widget->plotGrafico(tempo,valor);
             }
         }
     }
