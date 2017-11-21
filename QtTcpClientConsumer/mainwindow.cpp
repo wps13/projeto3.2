@@ -8,6 +8,10 @@
 
 using namespace std;
 
+/**
+ * @brief MainWindow::MainWindow Construtor da classe
+ * @param parent
+ */
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -57,27 +61,46 @@ void MainWindow::tcpConnect(){
     }
 }
 
+/**
+ * @brief MainWindow::tcpDisconnect Desconecta-se do Ip
+ */
 void MainWindow::tcpDisconnect()
 {
     socket->disconnectFromHost();
     qDebug() << "Desconectado";
 }
 
+/**
+ * @brief MainWindow::start Inicia o recebimento dos dados
+ */
+
 void MainWindow::start()
 {
     timer= startTimer(ui->horizontalSliderTiming->value() * 1000);
     qDebug ()<< "Timer Started";
 }
+
+/**
+ * @brief MainWindow::stop Finaliza o recebimento dos dados
+ */
 void MainWindow::stop()
 {
     killTimer(timer);
     qDebug() << "Timer Killed";
 }
 
+/**
+ * @brief MainWindow::update Atualiza a lista de IPs conectados
+ */
+
 void MainWindow::update()
 {
+    //armazena o comando a ser enviado ao servidor
     QString strList;
+
+    //armazena o ip coletado que está conectado ao servidor
     QString str;
+
 
     if(socket->state() == QAbstractSocket::ConnectedState){
         if(socket->isOpen()){
@@ -92,14 +115,17 @@ void MainWindow::update()
                   //separa o tempo recebido do servidor do valor dado
                   str = socket->readLine().replace("\n","").replace("\r","");
                  ui->listWidget->addItem(str);
-              }
 
+               }
 
         }
     }
 
 }
 
+/**
+ * @brief MainWindow::getData Acessa o servidor e recolhe a data
+ */
 void MainWindow::getData(){
     QString str;
     QByteArray array;
@@ -145,13 +171,19 @@ void MainWindow::getData(){
     }
 }
 
+/**
+ * @brief MainWindow::timerEvent Ação a ser realizada no intervalo de tempo
+ * @param e
+ */
 void MainWindow::timerEvent(QTimerEvent *e)
 {
     getData();
     qDebug()<<"Getting data";
 }
 
-
+/**
+ * @brief MainWindow::~MainWindow Destrutor da classe
+ */
 
 MainWindow::~MainWindow()
 {

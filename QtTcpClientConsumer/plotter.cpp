@@ -72,6 +72,12 @@ void Plotter::paintEvent(QPaintEvent *event)
 
 }
 
+/**
+ * @brief Plotter::plotGrafico Realiza a plotagem do gráfico
+ * @param t
+ * @param v
+ */
+
 void Plotter::plotGrafico(vector<qint64> &t, vector<int> &v)
 {
     double x = t.max_size();
@@ -86,7 +92,6 @@ void Plotter::plotGrafico(vector<qint64> &t, vector<int> &v)
 
      int x1,x2,y1,y2;
 
-     //ALTERAR AS VARIAVÉIS DE FORMA QUE O GRÁFICO SEJA DO TEMPO X VALOR DO SERVIDOR
 
      //define as posições iniciais
      x1=t1[0];
