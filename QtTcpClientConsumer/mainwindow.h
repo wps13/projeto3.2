@@ -31,6 +31,7 @@ private slots:
     void stop();
     void update();
     void timerEvent(QTimerEvent *e);
+    void getItem();
 
 private:
     Ui::MainWindow *ui;

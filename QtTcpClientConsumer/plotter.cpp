@@ -3,7 +3,7 @@
 #include <QBrush>
 #include <QPen>
 #include <cmath>
-
+#include <QDebug>
 
 using namespace std;
 /**
@@ -58,6 +58,7 @@ void Plotter::paintEvent(QPaintEvent *event)
 
 
     painter.drawRect(0,0,width(),height());
+    painter.drawRect(0,height()/2,width(),height());
     /*
     pen.setColor(QColor(255,180,0));
     painter.setPen(pen);
@@ -84,6 +85,15 @@ void Plotter::plotGrafico(vector<qint64> &t, vector<int> &v)
     int y = v.max_size();
     vector<long> t1;
     vector<int> v1;
+    QPainter painter(this);
+    QPen pen;
+
+    pen.setStyle(Qt::SolidLine);
+
+    pen.setWidth(2);
+
+    pen.setColor(QColor(255,255,255));
+    painter.setPen(pen);
 
     for(int i;i<t.size();i++)
         t1[i]=t[i]/x;
@@ -104,9 +114,17 @@ void Plotter::plotGrafico(vector<qint64> &t, vector<int> &v)
          y2=v[i]; //valor a ser alterado
          x1=x2;
          y1=y2;
+         qDebug() << "valores" ;
 
-           repaint();
+         qDebug() << x2 ;
+         qDebug() << y2;
+         qDebug() << x1;
+         qDebug() << y1;
+         painter.drawRect(x1,y1,x2,y2);
      }
+     painter.drawRect(0,height()/2,width(),height());
 
+
+     repaint();
 }
 

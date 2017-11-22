@@ -101,7 +101,6 @@ void MainWindow::update()
     //armazena o ip coletado que está conectado ao servidor
     QString str;
 
-
     if(socket->state() == QAbstractSocket::ConnectedState){
         if(socket->isOpen()){
             qDebug() << "Pegando IP";
@@ -179,6 +178,13 @@ void MainWindow::timerEvent(QTimerEvent *e)
 {
     getData();
     qDebug()<<"Getting data";
+}
+
+void MainWindow::getItem()
+{
+    QListWidgetItem *item = ui->listWidget->currentItem();
+    ui->lineEditIP->setText( item->text());
+
 }
 
 /**

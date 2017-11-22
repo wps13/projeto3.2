@@ -173,14 +173,33 @@
    <slot>setNum(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>142</x>
-     <y>380</y>
+     <x>155</x>
+     <y>404</y>
     </hint>
     <hint type="destinationlabel">
-     <x>211</x>
-     <y>382</y>
+     <x>296</x>
+     <y>404</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>listWidget</sender>
+   <signal>itemClicked(QListWidgetItem*)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>getItem()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>246</x>
+     <y>273</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>5</x>
+     <y>317</y>
     </hint>
    </hints>
   </connection>
  </connections>
+ <slots>
+  <slot>getItem()</slot>
+ </slots>
 </ui>
