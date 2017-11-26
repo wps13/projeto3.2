@@ -134,6 +134,9 @@ void MainWindow::getData(){
     vector<qint64> tempo;
     vector<int> valor;
 
+    tempo.clear();
+    valor.clear();
+
     qDebug() << "to get data...";
     if(socket->state() == QAbstractSocket::ConnectedState){
         if(socket->isOpen()){
@@ -146,6 +149,7 @@ void MainWindow::getData(){
 
             socket->waitForBytesWritten();
             socket->waitForReadyRead();
+
             qDebug() << socket->bytesAvailable();
             while(socket->bytesAvailable()){
                 //separa o tempo recebido do servidor do valor dado
@@ -155,6 +159,7 @@ void MainWindow::getData(){
                 if(list.size() == 2){
                     bool ok;
                     str = list.at(0);
+
                     thetime = str.toLongLong(&ok);
                     str = list.at(1);
                     qDebug() << thetime << ": " << str;

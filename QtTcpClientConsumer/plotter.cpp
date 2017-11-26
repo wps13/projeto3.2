@@ -82,11 +82,24 @@ void Plotter::paintEvent(QPaintEvent *event)
 void Plotter::plotGrafico(vector<qint64> &t, vector<int> &v)
 {
     double x = t.max_size();
-    int y = v.max_size();
-    vector<long> t1;
-    vector<int> v1;
+
+    double y = v.max_size();
+    vector<double> t1;
+    vector<double> v1;
     QPainter painter(this);
     QPen pen;
+
+    t1.resize(30);
+    v1.resize(30);
+
+    for (int i = 0;i<30;i++)
+    {
+        t1[i]=0;
+        v1[i]=0;
+    }
+
+
+
 
     pen.setStyle(Qt::SolidLine);
 
@@ -96,9 +109,9 @@ void Plotter::plotGrafico(vector<qint64> &t, vector<int> &v)
     painter.setPen(pen);
 
     for(int i;i<t.size();i++)
-        t1[i]=t[i]/x;
+        t1[i]=t[i]/x*width();
     for(int j;j<v.size();j++)
-        v1[j]=v[j]/y;
+        v1[j]=v[j]/y*(height()/2);
 
      int x1,x2,y1,y2;
 
@@ -106,6 +119,9 @@ void Plotter::plotGrafico(vector<qint64> &t, vector<int> &v)
      //define as posições iniciais
      x1=t1[0];
      y1=v1[0];
+     qDebug() <<"x1:" <<t1[0];
+     qDebug() <<"y1: " <<v1[0];
+
 
      //desenha várias retas na tela de forma a desenhar o gráfico
      for(int i=1;i<t1.size();i++)
